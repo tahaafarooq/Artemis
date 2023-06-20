@@ -205,3 +205,4 @@ class VulnScanner(object):
                     return json.dumps({"OS Command Injection": False})
 
         return json.dumps({"OS Command Injection": True, "Payload": success_payloads})
+    
