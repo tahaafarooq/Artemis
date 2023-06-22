@@ -1,14 +1,16 @@
 from dotenv import load_dotenv
 from Wappalyzer import Wappalyzer, WebPage
+from impacket import smb
 import requests
+import nmap
 import json
 import os
 
-load_dotenv()
-
 
 class IPScanner(object):
-    def __init__(self):
+    def __init__(self, path_config):
+        self.path_config = path_config
+        load_dotenv(self.path_config)
         self.WHOISXML_KEY = os.getenv("whoisxml_api_key")
         self.WHOIS_URL = f"https://www.whoisxmlapi.com/whoisserver/WhoisService?apiKey={self.WHOISXML_KEY}&domainName="
         self.DNSL_URL = f"https://www.whoisxmlapi.com/whoisserver/DNSService?apiKey={self.WHOISXML_KEY}&domainName="
@@ -62,10 +64,65 @@ class IPScanner(object):
         return res
 
 
+class NetworkScanner(object):
+    def __init__(self, target_ip):
+        self.__author__ = "tahaafarooq"
+        self.target_ip = target_ip
+        self.services = []
+        self.ports_open = []
+        self.smb_information = []
+        self.found_exploits = []
+
+    def port_scanner(self):
+        nm = nmap.PortScanner()
+        target = self.target_ip
+        sr = nm.scan(hosts=target, arguments="-p 1-65535")
+
+        for host in nm.all_hosts():
+            for port in nm[host]['tcp']:
+                if nm[host]['tcp'][445]['state'] == 'open':
+                    self.smb_anonymous_login_test()
+                    pass
+                output = f"Port : {port} --> State: {nm[host]['tcp'][port]['state']}"
+                self.ports_open.append(output)
+
+        return self.ports_open
+
+    def service_discovery(self):
+        nm = nmap.PortScanner()
+        target = self.target_ip
+        sr = nm.scan(hosts=target, arguments="-p 1-65535 -sV")
+
+        for host in nm.all_hosts():
+            print(f'Host: {host}')
+            for port in nm[host]['tcp']:
+                port_data = nm[host]['tcp'][port]
+                output = f'Port: {port} -> State: {port_data["state"]} -> Service: {port_data["name"]}'
+                self.services.append(port_data['name'])
+
+        return self.services
+
+    def smb_anonymous_login_test(self):
+        target = self.target_ip
+        smb_client = smb.SMB(target, target)
+        try:
+            smb_client.login('', '')
+            self.smb_information.append("[!] SMB ANONYMOUS LOGIN ACCEPTED [!]")
+        except smb.SessionError as e:
+            if e.get_error_code() == smb.NT_STATUS_LOGON_FAILURE:
+                print("ANONYMOUS LOGIN FAILURE")
+            else:
+                print("Error")
+        smb_client.close()
+
+        return self.smb_information
+
+
 class WebScanner(object):
     def __init__(self):
         self.__author__ = "tahaafarooq"
         self.found_directories = []
+        self.found_config_files = []
         self.stacks = []
 
     def scan_directory(self, url: str, wordlist: str):
@@ -77,7 +134,7 @@ class WebScanner(object):
             res = requests.get(full_url, verify=False)
             if res.status_code == 200:
                 self.found_directories.append(directory)
-                print(f"[+] Directory Found: {full_url} [-]")
+                print(f"[+] Directory Found: {full_url} [+]")
             else:
                 print(f"[-] Directory Not Found: {full_url} [-]")
 
@@ -103,6 +160,19 @@ class WebScanner(object):
         result = wappalyzer.analyze_with_versions_and_categories(webpage)
 
         return result
+
+    def scan_config_files(self, url: str):
+        config_files = [".env", "config.php", "settings.php", "setting.php", "web.config"]
+        for config in config_files:
+            full_url = f"{url}/{config}"
+            res = requests.get(full_url)
+            if res.status_code == 200:
+                print(f"[+] Config File Found :- {config} [+]")
+                self.found_config_files.append(config)
+            else:
+                print(f"[-] Config File Not Found :- {config} [-]")
+
+        return self.found_config_files
 
 
 class VulnScanner(object):
