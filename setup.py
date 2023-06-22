@@ -8,7 +8,7 @@ with open(path.join(this_directory, "README.md"), encoding="utf-8") as f:
 setup(
     name="artemis",
     version="1.0",
-    description="A community package-based API security framework that simplifies carrying out scans, and pentests upon certain scope while performing security penetration testing and researches.",
+    description="A community package-based tool security framework that simplifies carrying out scans, and pentests upon certain scope while performing security penetration testing and researches.",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/tahaafarooq/Artemis",
@@ -22,7 +22,7 @@ setup(
         "Penetration Testing" "VAPT" "Scanner" "Scanning" "Vunlerability" "Pentesting" "Pentest API",
         "python-tanzania",
     ],
-    install_requires=["vulners", "requests", "python-dotenv", "python-wappalyzer", "wappalyzer"],
+    install_requires=["vulners", "requests", "python-dotenv", "python-wappalyzer", "wappalyzer", "impacket", "python-nmap"],
     include_package_data=True,
     python_requires=">=3.7",
     classifiers=[

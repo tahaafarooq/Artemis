@@ -80,9 +80,9 @@ class NetworkScanner(object):
 
         for host in nm.all_hosts():
             for port in nm[host]['tcp']:
-                if nm[host]['tcp'][445]['state'] == 'open':
-                    self.smb_anonymous_login_test()
-                    pass
+                # if nm[host]['tcp'][445]['state'] == 'open':
+                #     self.smb_anonymous_login_test()
+                #     pass
                 output = f"Port : {port} --> State: {nm[host]['tcp'][port]['state']}"
                 self.ports_open.append(output)
 
