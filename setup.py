@@ -6,7 +6,7 @@ with open(path.join(this_directory, "README.md"), encoding="utf-8") as f:
     long_description = f.read()
 
 setup(
-    name="artemis",
+    name="artemispy",
     version="1.0",
     description="A community package-based tool security framework that simplifies carrying out scans, and pentests upon certain scope while performing security penetration testing and researches.",
     long_description=long_description,
@@ -16,7 +16,7 @@ setup(
     author="Tahaa Farooq",
     author_email="tahacodez@gmail.com",
     license="MIT",
-    packages=["artemis"],
+    packages=["artemispy"],
     keywords=[
         "Artemis API",
         "Penetration Testing" "VAPT" "Scanner" "Scanning" "Vunlerability" "Pentesting" "Pentest API",

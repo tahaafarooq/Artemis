@@ -1,6 +1,6 @@
 from dotenv import load_dotenv
 from Wappalyzer import Wappalyzer, WebPage
-from impacket import smb
+#from impacket import smb
 import requests
 import nmap
 import json
@@ -102,20 +102,20 @@ class NetworkScanner(object):
 
         return self.services
 
-    def smb_anonymous_login_test(self):
-        target = self.target_ip
-        smb_client = smb.SMB(target, target)
-        try:
-            smb_client.login('', '')
-            self.smb_information.append("[!] SMB ANONYMOUS LOGIN ACCEPTED [!]")
-        except smb.SessionError as e:
-            if e.get_error_code() == smb.NT_STATUS_LOGON_FAILURE:
-                print("ANONYMOUS LOGIN FAILURE")
-            else:
-                print("Error")
-        smb_client.close()
-
-        return self.smb_information
+    # def smb_anonymous_login_test(self):
+    #     target = self.target_ip
+    #     smb_client = smb.SMB(target, target)
+    #     try:
+    #         smb_client.login('', '')
+    #         self.smb_information.append("[!] SMB ANONYMOUS LOGIN ACCEPTED [!]")
+    #     except smb.SessionError as e:
+    #         if e.get_error_code() == smb.NT_STATUS_LOGON_FAILURE:
+    #             print("ANONYMOUS LOGIN FAILURE")
+    #         else:
+    #             print("Error")
+    #     smb_client.close()
+    #
+    #     return self.smb_information
 
 
 class WebScanner(object):
