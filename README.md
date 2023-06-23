@@ -63,7 +63,7 @@ print(result) # print the response
 {'WhoisRecord': {'domainName': 'tahaafarooq.dev', 'parseCode': 8, 'audit': {'createdDate': '2023-06-22 23:41:55 UTC', 'updatedDate': '2023-06-22 23:41:55 UTC'}<-SNIP->
 ```
 
-Start of by importing `IPScanner` from `artemis.scanner` which contains all the classes and functions for scanning.
+Start of by importing `IPScanner` from `artemispy.scanner` which contains all the classes and functions for scanning.
 
 Create a variable and then the value as the class loaded with the path to your **.env** file.
 
