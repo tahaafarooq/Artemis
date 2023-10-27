@@ -4,11 +4,12 @@
 [![python](https://img.shields.io/badge/python-3.10+-blue.svg?logo=python&labelColor=yellow)](https://www.python.org/downloads/)
 [![platform](https://img.shields.io/badge/platform-osx%2Flinux%2Fwindows-red.svg)](https://github.com/tahaafarooq/Artemis)
 [![License](https://img.shields.io/:license-MIT-green.svg)]()
+[![Made in Tanzania](https://img.shields.io/badge/made%20in-tanzania-008751.svg?style=flat-square)](https://github.com/Tanzania-Developers-Community/made-in-tanzania)
 
 A community package-based tool security framework that simplifies carrying out scans, and pentests upon certain scope while performing security penetration testing and researches.
 
 # Support
-[![Donate to MobSF](https://user-images.githubusercontent.com/4301109/117404264-7aab5480-aebe-11eb-9cbd-da82d7346bb3.png)](https://www.patreon.com/OpenSourcifyWithTahaa)
+[![Donate to ME](https://user-images.githubusercontent.com/4301109/117404264-7aab5480-aebe-11eb-9cbd-da82d7346bb3.png)](https://www.patreon.com/OpenSourcifyWithTahaa)
 
 If you find Artemis helpful, please consider donating :)
 
