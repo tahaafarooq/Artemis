@@ -296,7 +296,7 @@ class VulnScanner(object):
         for payload in payloads:
             response = requests.get(f"{url}{payload}")
             if '/bin/bash' in response.text:
-                success_payloads.apend(payload)
+                success_payloads.append(payload)
             else:
                 return json.dumps({"LFI": False})
 
