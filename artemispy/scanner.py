@@ -162,15 +162,19 @@ class WebScanner(object):
         return result
 
     def scan_config_files(self, url: str):
-        config_files = [".env", "config.php", "settings.php", "setting.php", "web.config"]
+        wordlist = "assets/config-files.txt"
+
+        with open(wordlist, "r") as file:
+            config_files = file.read().splitlines()
+
         for config in config_files:
             full_url = f"{url}/{config}"
-            res = requests.get(full_url)
+            res = requests.get(full_url, verify=False)
             if res.status_code == 200:
-                print(f"[+] Config File Found :- {config} [+]")
                 self.found_config_files.append(config)
+                print(f"[+] Config File Found: {config} [+]")
             else:
-                print(f"[-] Config File Not Found :- {config} [-]")
+                continue
 
         return self.found_config_files
 
